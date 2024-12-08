@@ -1,9 +1,9 @@
 // Include classes
-#include "Emulator.h"
+#include "TowerSums.h"
 
 
 //=================
-Emulator::Emulator()
+TowerSums::TowerSums()
 {
    utilities = new Utilities();
 }
@@ -11,7 +11,7 @@ Emulator::Emulator()
 
 
 //===========
-Emulator::~Emulator()
+TowerSums::~TowerSums()
 {
 }
 //===========
@@ -19,7 +19,7 @@ Emulator::~Emulator()
 
 
 //============================================================================
-pair<int, int> Emulator::getParametersFromVhFile( const string& inputFileName )
+pair<int, int> TowerSums::getParametersFromVhFile( const string& inputFileName )
 {
     ifstream f(inputFileName);
     string line;
@@ -115,7 +115,7 @@ pair<int, int> Emulator::getParametersFromVhFile( const string& inputFileName )
 
 
 //==================================================================================================================
-vector<vector<int>> Emulator::vhArchInputToArrayCE_E( const string& inputFileName, int output_size, int input_size )
+vector<vector<int>> TowerSums::vhArchInputToArrayCE_E( const string& inputFileName, int output_size, int input_size )
 {
    vector<vector<int>> output(output_size, vector<int>(input_size, 0));
    ifstream f(inputFileName);
@@ -205,7 +205,7 @@ vector<vector<int>> Emulator::vhArchInputToArrayCE_E( const string& inputFileNam
 
 // TO BE DONE
 //=====================================================================================================================================
-vector<vector<vector<int>>> Emulator::vhArchInputToArrayCE_H( const string& inputFileName, int output_size, int input_size, const string& STC )
+vector<vector<vector<int>>> TowerSums::vhArchInputToArrayCE_H( const string& inputFileName, int output_size, int input_size, const string& STC )
 {
    
    int number_of_subchannels;
@@ -294,7 +294,7 @@ vector<vector<vector<int>>> Emulator::vhArchInputToArrayCE_H( const string& inpu
 
 
 //=======================================================================
-vector<uint64_t> Emulator::readInputEnergiesE( const string& inputFileName )
+vector<uint64_t> TowerSums::readInputEnergiesE( const string& inputFileName )
 {
    
    vector<uint64_t> output;
@@ -316,51 +316,14 @@ vector<uint64_t> Emulator::readInputEnergiesE( const string& inputFileName )
    
    inputFile.close();
    return output;
-
-
-/*
-//********************************************
-// Old generateInputEnergies part of the code
-//********************************************
    
-   random_device rd;
-   mt19937 gen(rd());
-   uniform_int_distribution<> dis(0, 255);
-   
-   vector<string> output;
-   string stringForCommand = "0" + to_string(lengthOfItems) + "b"; // "08b"
-
-   for( int i = 0; i < numberOfItems; ++i )
-   {
-      bitset<8> bits(dis(gen));
-      output.push_back(bits.to_string());
-      
-      string binarySubstring = output.back().substr(output.back().length() - lengthOfItems, lengthOfItems - manLength);
-      
-      cout << "binarySubstring = " << binarySubstring << endl;
-
-
-      int validationExp = 0;
-      for( string::size_type i = 0; i < binarySubstring.length(); ++i )
-      {
-        validationExp += (binarySubstring[i] - '0') * pow(2, binarySubstring.length() - 1 - i);
-      }
-      
-      
-      if( validationExp > outputLengthNextStep - manLength )
-      {
-         output.back() = "10110" + output.back().substr(output.back().size() - manLength);
-      }
-   }
- */
-
 }
 //=======================================================================
 
 
 
 //==================================================================================================
-vector<vector<uint64_t>> Emulator::readInputEnergiesH( const string& inputFileName, int input_size )
+vector<vector<uint64_t>> TowerSums::readInputEnergiesH( const string& inputFileName, int input_size )
 {
    
    vector<vector<uint64_t>> output(6, vector<uint64_t>(input_size, 0));
@@ -403,7 +366,7 @@ vector<vector<uint64_t>> Emulator::readInputEnergiesH( const string& inputFileNa
 
 
 //===========================================================================
-vector<uint64_t> Emulator::unpackInteger3m(const vector<uint64_t>& inputData)
+vector<uint64_t> TowerSums::unpackInteger3m(const vector<uint64_t>& inputData)
 {
    
    return utilities->unpack5e3mToInt(inputData);
@@ -414,7 +377,7 @@ vector<uint64_t> Emulator::unpackInteger3m(const vector<uint64_t>& inputData)
 
 
 //===========================================================================================
-vector<vector<uint64_t>> Emulator::unpackInteger4m(const vector<vector<uint64_t>>& inputData)
+vector<vector<uint64_t>> TowerSums::unpackInteger4m(const vector<vector<uint64_t>>& inputData)
 {
    
    return utilities->unpack5e4mToInt(inputData);
@@ -425,7 +388,7 @@ vector<vector<uint64_t>> Emulator::unpackInteger4m(const vector<vector<uint64_t>
 
 
 //=========================================================================================
-vector<uint64_t> Emulator::addVectors(const vector<uint64_t>& a, const vector<uint64_t>& b)
+vector<uint64_t> TowerSums::addVectors(const vector<uint64_t>& a, const vector<uint64_t>& b)
 {
    
    return utilities->addVectors(a, b);
@@ -436,11 +399,11 @@ vector<uint64_t> Emulator::addVectors(const vector<uint64_t>& a, const vector<ui
 
 
 //===============================================================================================================================================
-vector<uint64_t> Emulator::summation( const vector<uint64_t>& inputData, const vector<vector<int>>& matrixArc, int summatorVersion, bool summationTypeFlag)
+vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const vector<vector<int>>& matrixArc, int summatorVersion, bool summationTypeFlag)
 {
    vector<uint64_t> output;
    
-   int outputControlNo = 467; // Debugging purposes
+//   int outputControlNo = 467;
 
    for (size_t i = 0; i < matrixArc.size(); i++)
    {
@@ -980,7 +943,7 @@ vector<uint64_t> Emulator::summation( const vector<uint64_t>& inputData, const v
 
 
 //==================================================================================
-vector<uint64_t> Emulator::overflowChecker(const vector<uint64_t>& inputData, int overflowBit)
+vector<uint64_t> TowerSums::overflowChecker(const vector<uint64_t>& inputData, int overflowBit)
 {
    vector<uint64_t> output;
    
@@ -1012,7 +975,7 @@ vector<uint64_t> Emulator::overflowChecker(const vector<uint64_t>& inputData, in
 
 
 //=========================================================================================
-vector<uint64_t> Emulator::trimming(const vector<uint64_t>& inputData, int targetNumberBits, int MSB)
+vector<uint64_t> TowerSums::trimming(const vector<uint64_t>& inputData, int targetNumberBits, int MSB)
 {
 
    assert(MSB >= targetNumberBits);  // Ensure MSB is greater than or equal to targetNumberBits
@@ -1040,7 +1003,7 @@ vector<uint64_t> Emulator::trimming(const vector<uint64_t>& inputData, int targe
 
 
 //=================================================================
-vector<uint64_t> Emulator::packInteger4e4m(const vector<uint64_t>& inputData)
+vector<uint64_t> TowerSums::packInteger4e4m(const vector<uint64_t>& inputData)
 {
    return utilities->pack4e4mFromInt(inputData);
 }
@@ -1051,7 +1014,7 @@ vector<uint64_t> Emulator::packInteger4e4m(const vector<uint64_t>& inputData)
 
 
 //=============================================================================
-vector<string> Emulator::generateInputShifts( int numberOfItems, int noOfBits )
+vector<string> TowerSums::generateInputShifts( int numberOfItems, int noOfBits )
 {
    
    random_device rd;

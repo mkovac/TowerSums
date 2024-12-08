@@ -1,5 +1,5 @@
-#ifndef Emulator_h
-#define Emulator_h
+#ifndef TowerSums_h
+#define TowerSums_h
 
 // C++
 #include <iostream>
@@ -18,13 +18,13 @@
 using namespace std;
 
 
-class Emulator
+class TowerSums
 {
 
 public:
 	
-	Emulator();
-	~Emulator();
+	TowerSums();
+	~TowerSums();
    
    pair<int, int> getParametersFromVhFile( const string& );
    
