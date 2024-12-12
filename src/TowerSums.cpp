@@ -20,52 +20,65 @@ TowerSums::~TowerSums()
 
 //============================================================================
 pair<int, int> TowerSums::getParametersFromVhFile( const string& inputFileName )
+
+/* num inputs = 96(in0-in95) */
+
 {
-    ifstream f(inputFileName);
-    string line;
+   ifstream f(inputFileName);
+   string line;
 
-    getline(f, line); // Read first line
-    getline(f, line); // Read second line
-    int in_num = 0;
-    int out_num = 0;
+   getline(f, line); // Read first line
+   getline(f, line); // Read second line
+   int in_num = 0;
+   int out_num = 0;
 
-    bool flag_current_digit = false;
-    bool flag_current_alpha = false;
-    bool flag_last_digit = false;
-    bool flag_last_alpha = false;
+   bool flag_current_digit = false;
+   bool flag_current_alpha = false;
+   bool flag_last_digit = false;
+   bool flag_last_alpha = false;
 
-    bool flag_start_condition = false;
-    bool flag_stop_condition = false;
+   bool flag_start_condition = false;
+   bool flag_stop_condition = false;
 
-    bool firstTime = false;
+   bool firstTime = false;
 
-    for (char element : line) {
-        if (isdigit(element)) {
-            flag_current_digit = true;
-            flag_current_alpha = false;
-            if (!firstTime) {
-                firstTime = true;
-            }
-        } else {
-            flag_current_digit = false;
-            flag_current_alpha = true;
-        }
+   for (char element : line)
+   {
+      if (isdigit(element)) 
+      {
+         flag_current_digit = true;
+         flag_current_alpha = false;
+         
+         if (!firstTime)
+         {
+            firstTime = true;
+         }
+      } 
+      else
+      {
+         flag_current_digit = false;
+         flag_current_alpha = true;
+      }
 
-        if (flag_current_digit && flag_last_alpha && firstTime) {
-            flag_start_condition = true;
-        }
-        if (flag_current_alpha && flag_last_digit && firstTime) {
-            firstTime = false;
-            flag_stop_condition = true;
-        }
+      if (flag_current_digit && flag_last_alpha && firstTime) 
+      {
+         flag_start_condition = true;
+      }
+      
+      if (flag_current_alpha && flag_last_digit && firstTime)
+      {
+         firstTime = false;
+         flag_stop_condition = true;
+      }
 
-        if (flag_start_condition && !flag_stop_condition) {
-            in_num = in_num * 10 + (element - '0');
-        }
+      if (flag_start_condition && !flag_stop_condition)
+      {
+         in_num = in_num * 10 + (element - '0');
+      }
 
-        flag_last_alpha = flag_current_alpha;
-        flag_last_digit = flag_current_digit;
-    }
+      flag_last_alpha = flag_current_alpha;
+      flag_last_digit = flag_current_digit;
+   }
 
 
     getline(f, line); // Read third line
@@ -80,35 +93,44 @@ pair<int, int> TowerSums::getParametersFromVhFile( const string& inputFileName )
 
     firstTime = false;
 
-    for (char element : line) {
-        if (isdigit(element)) {
-            flag_current_digit = true;
-            flag_current_alpha = false;
-            if (!firstTime) {
-                firstTime = true;
-            }
-        } else {
-            flag_current_digit = false;
-            flag_current_alpha = true;
-        }
+    for (char element : line)
+    {
+      if (isdigit(element))
+      {
+         flag_current_digit = true;
+         flag_current_alpha = false;
+         if (!firstTime)
+         {
+            firstTime = true;
+         }
+      }
+      else
+      {
+         flag_current_digit = false;
+         flag_current_alpha = true;
+      }
 
-        if (flag_current_digit && flag_last_alpha && firstTime) {
-            flag_start_condition = true;
-        }
-        if (flag_current_alpha && flag_last_digit && firstTime) {
-            firstTime = false;
-            flag_stop_condition = true;
-        }
+      if (flag_current_digit && flag_last_alpha && firstTime)
+      {
+         flag_start_condition = true;
+      }
+      
+      if (flag_current_alpha && flag_last_digit && firstTime)
+      {
+         firstTime = false;
+         flag_stop_condition = true;
+      }
 
-        if (flag_start_condition && !flag_stop_condition) {
-            out_num = out_num * 10 + (element - '0');
-        }
+      if (flag_start_condition && !flag_stop_condition)
+      {
+         out_num = out_num * 10 + (element - '0');
+      }
 
-        flag_last_alpha = flag_current_alpha;
-        flag_last_digit = flag_current_digit;
-    }
+      flag_last_alpha = flag_current_alpha;
+      flag_last_digit = flag_current_digit;
+   }
 
-    return {in_num, out_num};
+   return {in_num, out_num};
 }
 //============================================================================
 

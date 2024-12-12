@@ -231,7 +231,6 @@ int main()
 
 
 
-
 // ****************************************************************
 // Read CE_H input energies - assumption: inputs are in 5E3M format
 // ****************************************************************
@@ -361,7 +360,7 @@ int main()
          {
             vector<int> outputValues_H(result_H.second, 0);
             cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " H inputs not detected! Filling output with zeros!" << endl;  
-         }
+         }         
          
       } //End i_sector
    } //End i_board
