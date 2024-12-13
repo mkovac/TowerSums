@@ -18,133 +18,76 @@ TowerSums::~TowerSums()
 
 
 
-//============================================================================
+//==============================================================================
 pair<int, int> TowerSums::getParametersFromVhFile( const string& inputFileName )
-
-/* num inputs = 96(in0-in95) */
-
 {
-   ifstream f(inputFileName);
-   string line;
-
-   getline(f, line); // Read first line
-   getline(f, line); // Read second line
-   int in_num = 0;
-   int out_num = 0;
-
-   bool flag_current_digit = false;
-   bool flag_current_alpha = false;
-   bool flag_last_digit = false;
-   bool flag_last_alpha = false;
-
-   bool flag_start_condition = false;
-   bool flag_stop_condition = false;
-
-   bool firstTime = false;
-
-   for (char element : line)
+   ifstream inputFile(inputFileName);
+   
+   if (!inputFile.is_open())
    {
-      if (isdigit(element)) 
-      {
-         flag_current_digit = true;
-         flag_current_alpha = false;
-         
-         if (!firstTime)
-         {
-            firstTime = true;
-         }
-      } 
-      else
-      {
-         flag_current_digit = false;
-         flag_current_alpha = true;
-      }
+      cerr << "Error opening file!" << endl;
+   }
+   
+   string line;
+   
+   int numInputs = 0;
+   int numOutputs = 0;
+   
+   
+   regex inputRegex(R"(/\* num inputs = (\d+).*\*/)");
+   regex outputRegex(R"(/\* num outputs = (\d+).*\*/)");
+   smatch match;
 
-      if (flag_current_digit && flag_last_alpha && firstTime) 
+   while (getline(inputFile, line))
+   {
+      if (regex_search(line, match, inputRegex))
       {
-         flag_start_condition = true;
+         numInputs = stoi(match[1]);
+      }
+      else if (std::regex_search(line, match, outputRegex))
+      {
+         numOutputs = stoi(match[1]);
       }
       
-      if (flag_current_alpha && flag_last_digit && firstTime)
+      // Break if both values are found
+      if (numInputs != 0 && numOutputs != 0)
       {
-         firstTime = false;
-         flag_stop_condition = true;
+         break;
       }
-
-      if (flag_start_condition && !flag_stop_condition)
-      {
-         in_num = in_num * 10 + (element - '0');
-      }
-
-      flag_last_alpha = flag_current_alpha;
-      flag_last_digit = flag_current_digit;
    }
 
+   inputFile.close();
 
-    getline(f, line); // Read third line
-
-    flag_current_digit = false;
-    flag_current_alpha = false;
-    flag_last_digit = false;
-    flag_last_alpha = false;
-
-    flag_start_condition = false;
-    flag_stop_condition = false;
-
-    firstTime = false;
-
-    for (char element : line)
-    {
-      if (isdigit(element))
-      {
-         flag_current_digit = true;
-         flag_current_alpha = false;
-         if (!firstTime)
-         {
-            firstTime = true;
-         }
-      }
-      else
-      {
-         flag_current_digit = false;
-         flag_current_alpha = true;
-      }
-
-      if (flag_current_digit && flag_last_alpha && firstTime)
-      {
-         flag_start_condition = true;
-      }
+   if (numInputs != 0 && numOutputs != 0)
+   {
+      cout << "Number of inputs and outputs successfully extracted!" << endl;
       
-      if (flag_current_alpha && flag_last_digit && firstTime)
-      {
-         firstTime = false;
-         flag_stop_condition = true;
-      }
-
-      if (flag_start_condition && !flag_stop_condition)
-      {
-         out_num = out_num * 10 + (element - '0');
-      }
-
-      flag_last_alpha = flag_current_alpha;
-      flag_last_digit = flag_current_digit;
+//      cout << "Number of inputs: " << numInputs << endl;
+//      cout << "Number of outputs: " << numOutputs << endl;
+   }
+   else
+   {
+      cerr << "Failed to extract required values!" << endl;
    }
 
-   return {in_num, out_num};
+   return {numInputs, numOutputs};
 }
-//============================================================================
+//==============================================================================
 
 
 
 //==================================================================================================================
-vector<vector<int>> TowerSums::vhArchInputToArrayCE_E( const string& inputFileName, int output_size, int input_size )
+vector<vector<int>> TowerSums::vhArchInputToArray_CE_E( const string& inputFileName, int output_size, int input_size )
 {
+   
+   // A 2D vector with output_size rows and input_size columns, where all elements are initialized to 0.
    vector<vector<int>> output(output_size, vector<int>(input_size, 0));
+   
    ifstream f(inputFileName);
    string line;
    int counter{-1};
    int counter_preamble{5}; // Since architecture starts at sixth row from the top (zero indexed)
-   
+
 
    // Check 2D vector
 //   for (const auto& row : output)
@@ -157,13 +100,98 @@ vector<vector<int>> TowerSums::vhArchInputToArrayCE_E( const string& inputFileNa
 //   }
 
 
+   if (f.is_open())
+   {
+      while (getline(f, line))
+      {         
+         counter++;
+//         cout << line << endl;
+
+         if (counter > counter_preamble)
+         {
+            if (line.find("*/") == string::npos) continue;
+              
+            auto start_index = line.find("*/") + 3;
+//            cout << "start_index = " << start_index << endl;
+            auto tempString = line.substr(start_index);
+//            cout << "tempString = " << tempString << endl;
+            
+            stringstream iss(tempString);
+            string token;
+            
+            vector<string> tempString_variable;
+
+            while (getline(iss, token, ','))
+            {
+               token.erase(remove(token.begin(), token.end(), ' '), token.end());
+               tempString_variable.push_back(token);  
+            }
+                                   
+            tempString_variable.pop_back();
+                                   
+            if (tempString_variable.size() > 1)
+            {
+               int counter1 = 1;
+                            
+               for (int i = 0; i < stoi(tempString_variable[0]); i++)
+               {
+                  output[counter - counter_preamble - 1][stoi(tempString_variable[counter1])] = stoi(tempString_variable[counter1 + 1]);
+                  counter1 += 2;
+               }
+            } // end if
+         
+         } // end if
+      } // end while
+      
+      f.close();
+   
+   } // end if
+    
+   return output;
+}
+//==================================================================================================================
+
+
+
+//==============================================================================================================================================
+vector<vector<vector<int>>> TowerSums::vhArchInputToArray_CE_H( const string& inputFileName, int output_size, int input_size, const string& STC )
+{
+   
+   int number_of_subchannels;
+   
+   if (STC == "STC4")
+   {
+      number_of_subchannels = 12;
+   }
+   else if (STC == "STC16")
+   {
+      number_of_subchannels = 3;
+   }
+   else if (STC == "oneSize")
+   {
+      number_of_subchannels = 6;
+   }
+   else
+   {
+      cout << "Unknown STC architecture! Please use STC4 or STC16 parameters." << endl;
+      exit(0);
+   }
+   
+   
+   vector<vector<vector<int>>> output(output_size, vector<vector<int>>(input_size, vector<int>(number_of_subchannels, 0)));
+   
+   
+   ifstream f(inputFileName);
+   string line;
+   int counter{-1};
+   int counter_preamble{5}; // Since architecture starts at sixth row from the top (zero indexed)
 
    if (f.is_open())
    {
       while (getline(f, line))
       {         
          counter++;
-         cout << line << endl;
+//         cout << line << endl;
 
          if (counter > counter_preamble)
          {
@@ -188,113 +216,11 @@ vector<vector<int>> TowerSums::vhArchInputToArrayCE_E( const string& inputFileNa
             tempString_variable.pop_back();
             
 
-//            std::erase_if(tempString_variable, [](auto&& str){return str.find(',', 0) != std::string::npos;});
-                          
-
-            // Test vector
-//            cout << "tempString_variable.size() = " << tempString_variable.size() << endl;
-//            for (const auto& string : tempString_variable)
-//            {
-//               cout << "string = " << string << endl;
-//
-//            }
-
-
             if (tempString_variable.size() > 1)
             {
                int counter1 = 1;
                
 //               cout << "stoi(tempString_variable[0]) = " << stoi(tempString_variable[0]) << endl;
-             
-               for (int i = 0; i < stoi(tempString_variable[0]); i++)
-               {
-                  output[counter - counter_preamble - 1][stoi(tempString_variable[counter1])] = stoi(tempString_variable[counter1 + 1]);
-                  counter1 += 2;
-               }
-            }// end if
-         
-         }// end if
-      }// end while
-      f.close();
-   }// end if
-    
-   return output;
-
-}
-//==================================================================================================================
-
-
-
-// TO BE DONE
-//=====================================================================================================================================
-vector<vector<vector<int>>> TowerSums::vhArchInputToArrayCE_H( const string& inputFileName, int output_size, int input_size, const string& STC )
-{
-   
-   int number_of_subchannels;
-   
-   if (STC == "STC4")
-   {
-      number_of_subchannels = 12;
-   }
-   else if (STC == "STC16")
-   {
-      number_of_subchannels = 3;
-   }
-   else if (STC == "oneSize")
-   {
-      number_of_subchannels = 6;
-   }
-   else
-   {
-      cout << "Unknown STC architecture!! Please use STC4 or STC16 parameters." << endl;
-      exit(0);
-      
-   }
-   
-   
-   vector<vector<vector<int>>> output(output_size, vector<vector<int>>(input_size, vector<int>(number_of_subchannels, 0)));
-   
-   
-   ifstream f(inputFileName);
-   string line;
-   int counter{-1};
-   int counter_preamble{5}; // Since architecture starts at sixth row from the top (zero indexed)
-
-   if (f.is_open())
-   {
-      while (getline(f, line))
-      {         
-         counter++;
-         cout << line << endl;
-
-         if (counter > counter_preamble)
-         {
-            if (line.find("*/") == string::npos) continue;
-              
-            auto start_index = line.find("*/") + 3;
-            cout << "start_index = " << start_index << endl;
-            auto tempString = line.substr(start_index);
-            cout << "tempString = " << tempString << endl;
-            
-            stringstream iss(tempString);
-            string token;
-            
-            vector<string> tempString_variable;
-
-            while (getline(iss, token, ','))
-            {
-               token.erase(remove(token.begin(), token.end(), ' '), token.end());
-               tempString_variable.push_back(token);  
-            }
-                                   
-            tempString_variable.pop_back();
-            
-
-            if (tempString_variable.size() > 1)
-            {
-               int counter1 = 1;
-               
-               cout << "stoi(tempString_variable[0]) = " << stoi(tempString_variable[0]) << endl;
              
                for (int i = 0; i < stoi(tempString_variable[0]); i++)
                {
@@ -305,17 +231,18 @@ vector<vector<vector<int>>> TowerSums::vhArchInputToArrayCE_H( const string& inp
          
          }// end if
       }// end while
+      
       f.close();
+   
    }// end if
     
    return output;
-
 }
-//=====================================================================================================================================
+//==============================================================================================================================================
 
 
 
-//=======================================================================
+//===========================================================================
 vector<uint64_t> TowerSums::readInputEnergiesE( const string& inputFileName )
 {
    
@@ -338,13 +265,12 @@ vector<uint64_t> TowerSums::readInputEnergiesE( const string& inputFileName )
    
    inputFile.close();
    return output;
-   
 }
-//=======================================================================
+//===========================================================================
 
 
 
-//==================================================================================================
+//===================================================================================================
 vector<vector<uint64_t>> TowerSums::readInputEnergiesH( const string& inputFileName, int input_size )
 {
    
@@ -383,7 +309,7 @@ vector<vector<uint64_t>> TowerSums::readInputEnergiesH( const string& inputFileN
    return output;
 
 }
-//==================================================================================================
+//===================================================================================================
 
 
 
@@ -420,7 +346,7 @@ vector<uint64_t> TowerSums::addVectors(const vector<uint64_t>& a, const vector<u
 
 
 
-//===============================================================================================================================================
+//==========================================================================================================================================================
 vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const vector<vector<int>>& matrixArc, int summatorVersion, bool summationTypeFlag)
 {
    vector<uint64_t> output;
@@ -960,11 +886,11 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
       
    return output;
 }
-//===============================================================================================================================================
+//==========================================================================================================================================================
 
 
 
-//==================================================================================
+//=============================================================================================
 vector<uint64_t> TowerSums::overflowChecker(const vector<uint64_t>& inputData, int overflowBit)
 {
    vector<uint64_t> output;
@@ -992,11 +918,11 @@ vector<uint64_t> TowerSums::overflowChecker(const vector<uint64_t>& inputData, i
     
    return output;
 }
-//==================================================================================
+//=============================================================================================
 
 
 
-//=========================================================================================
+//====================================================================================================
 vector<uint64_t> TowerSums::trimming(const vector<uint64_t>& inputData, int targetNumberBits, int MSB)
 {
 
@@ -1020,22 +946,20 @@ vector<uint64_t> TowerSums::trimming(const vector<uint64_t>& inputData, int targ
 
    return output;
 }
-//=========================================================================================
+//====================================================================================================
 
 
 
-//=================================================================
+//============================================================================
 vector<uint64_t> TowerSums::packInteger4e4m(const vector<uint64_t>& inputData)
 {
    return utilities->pack4e4mFromInt(inputData);
 }
-//=================================================================
+//============================================================================
    
 
 
-
-
-//=============================================================================
+//==============================================================================
 vector<string> TowerSums::generateInputShifts( int numberOfItems, int noOfBits )
 {
    
@@ -1053,5 +977,5 @@ vector<string> TowerSums::generateInputShifts( int numberOfItems, int noOfBits )
 
    return output;
 }
-//=============================================================================
+//==============================================================================
 

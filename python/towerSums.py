@@ -652,7 +652,7 @@ for s in range(1,2): #3
         # for debuging pruposes (set debugMode flag to True)
         if debugMode:
             print("Architecture:")
-            print(matVariable_CE_E)
+            print(matVariable_CE_H)
             print("Sector No:")
             print(s)
             print("Board No:")

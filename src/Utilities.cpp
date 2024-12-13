@@ -160,3 +160,84 @@ vector<uint64_t> Utilities::addVectors(const vector<uint64_t>& a, const vector<u
    return result;
 }
 //==========================================================================================
+
+
+
+//===========================================================================
+ void Utilities::printArchMatrix_CE_E(const vector<vector<int>>& archMatrix )
+{
+   cout << "Architecture:" << endl;
+   
+   cout << "[";
+   
+   for (size_t i = 0; i < archMatrix.size(); ++i)
+   {
+      cout << "[ ";
+      for (size_t j = 0; j < archMatrix[i].size(); ++j)
+      {
+         cout << archMatrix[i][j];
+         if (j < archMatrix[i].size() - 1)
+         {
+            cout << ".  ";
+         }
+
+         // Add a newline every 18 elements, but not after the last element
+         if ((j + 1) % 18 == 0 && j + 1 < archMatrix[i].size())
+         {
+            cout << "\n  "; // Align with the inner list
+            cout << " ";
+         }
+      }
+      cout << "]" << endl << " ";
+   }
+   cout << "]" << endl;
+}
+//===========================================================================
+
+
+
+//===================================================================================
+ void Utilities::printArchMatrix_CE_H(const vector<vector<vector<int>>>& archMatrix )
+{
+   cout << "Architecture:" << endl;
+   
+   cout << "[";   
+   for (const auto& slice : archMatrix)
+   {
+      cout << "[";
+      
+      for (size_t i = 0; i < slice.size(); ++i)
+      {
+         cout << "[ ";
+
+         for (size_t j = 0; j < slice[i].size(); ++j)
+         {
+            cout << slice[i][j];
+            
+            if (j < slice[i].size() - 1)
+            {
+               cout << ".  ";
+            }
+            else
+            {
+               cout << ".";
+            }
+         }
+         
+         if (i < slice.size() - 1)
+         {
+            cout << "]" << endl << "  ";
+         }
+         else
+         {
+            cout << "]";
+         }
+       
+         
+      }
+      cout << "]" << endl << endl;
+   }
+   cout << "]" << endl;
+
+}
+//===================================================================================

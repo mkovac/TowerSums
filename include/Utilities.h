@@ -24,10 +24,12 @@ public:
    vector<uint64_t> pack4e4mFromInt( const vector<uint64_t>& );
    
    vector<uint64_t> addVectors(const vector<uint64_t>&, const vector<uint64_t>& );
+   
+   static void printArchMatrix_CE_E(const vector<vector<int>>& );
+   static void printArchMatrix_CE_H(const vector<vector<vector<int>>>& );
 
 
 private:
-
 
 
 };

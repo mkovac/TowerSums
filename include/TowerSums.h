@@ -11,6 +11,8 @@
 #include <bitset>
 #include <random>
 #include <cassert>
+#include <regex>
+
 
 #include "Utilities.h"
 
@@ -28,8 +30,8 @@ public:
    
    pair<int, int> getParametersFromVhFile( const string& );
    
-   vector<vector<int>> vhArchInputToArrayCE_E( const string& , int, int );
-   vector<vector<vector<int>>> vhArchInputToArrayCE_H( const string& , int, int, const string& );
+   vector<vector<int>> vhArchInputToArray_CE_E( const string& , int, int );
+   vector<vector<vector<int>>> vhArchInputToArray_CE_H( const string& , int, int, const string& );
    
    vector<uint64_t>         readInputEnergiesE( const string& );
    vector<vector<uint64_t>> readInputEnergiesH( const string&, int );

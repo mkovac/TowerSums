@@ -1,4 +1,5 @@
 #include "include/TowerSums.h"
+#include "include/Utilities.h"
 
 #include <filesystem>
 #include <iostream>
@@ -14,7 +15,7 @@ int main()
 //   bool filesCreatedFlag{false};
    
    int num_of_sectors{2}; // 3 sectors
-   int num_of_boards{7}; // 14 boards
+   int num_of_boards{7};  // 14 boards
 
    for (int i_sector = 1; i_sector < num_of_sectors; ++i_sector)
    {
@@ -25,113 +26,91 @@ int main()
          string input_folder_arch     = "./inputs/Arhitecture/v2";
          string input_folder_energies = "./inputs/Energies/Stage1_Unpacker";
            
-         string fileName_E_arch = input_folder_arch + "/CE_E_" + to_string(i_board) + "_v2.vh";
-         string fileName_H_arch = input_folder_arch + "/CE_H_" + to_string(i_board) + "_v2.vh";
+         string fileName_CE_E_arch = input_folder_arch + "/CE_E_" + to_string(i_board) + "_v2.vh";
+         string fileName_CE_H_arch = input_folder_arch + "/CE_H_" + to_string(i_board) + "_v2.vh";
           
-         string fileName_E_energies = input_folder_energies + "/CEE/Sector_" + to_string(i_sector) + "_Board_" + to_string(i_board) + ".txt";
-         string fileName_H_energies = input_folder_energies + "/CEH/Sector_" + to_string(i_sector) + "_Board_" + to_string(i_board) + ".txt";
+         string fileName_CE_E_energies = input_folder_energies + "/CEE/Sector_" + to_string(i_sector) + "_Board_" + to_string(i_board) + ".txt";
+         string fileName_CE_H_energies = input_folder_energies + "/CEH/Sector_" + to_string(i_sector) + "_Board_" + to_string(i_board) + ".txt";
            
          string STC_architecture = "oneSize"; // STC4, STC16 or oneSize
            
-           
+         
          TowerSums *ts = new TowerSums();
            
          vector<vector<int>> matVariable_CE_E;
          vector<vector<vector<int>>> matVariable_CE_H;
-         pair<int, int> result_E, result_H;
+         pair<int, int> inputOutputE, inputOutputH;
    
    
+
+// ******************************************
+// Read CE_E VH files and architecture matrix
+// ******************************************
    
-// ***********************************
-// Read CE_E VH files and create array
-// ***********************************
-   
-         filesystem::path filePath_CE_E_arch(fileName_E_arch);
+         filesystem::path filePath_CE_E_arch(fileName_CE_E_arch);
          if (filesystem::exists(filePath_CE_E_arch) && filesystem::is_regular_file(filePath_CE_E_arch))
          {
             cout << "The file " << filePath_CE_E_arch << " exists." << endl;
             
             // Number of input and output lines is fetched
-            result_E = ts->getParametersFromVhFile(fileName_E_arch);
+            inputOutputE = ts->getParametersFromVhFile(fileName_CE_E_arch);
             
             // Input to output mapping is fetched
-            matVariable_CE_E = ts->vhArchInputToArrayCE_E( fileName_E_arch, result_E.second, result_E.first );
+            matVariable_CE_E = ts->vhArchInputToArray_CE_E( fileName_CE_E_arch, inputOutputE.second, inputOutputE.first );
             
        
             // Begin test
-            cout << endl;            
-            cout << "In E num: "  << result_E.first  << endl;
-            cout << "Out E num: " << result_E.second << endl;
-      
-            for (const auto& row : matVariable_CE_E)
-            {
-               for (const auto& element : row)
-               {
-                  cout << element << " ";
-               }
-               cout << endl;
-            }
+            cout << "Number of inputs: "  << inputOutputE.first  << endl;
+            cout << "Number of outputs: " << inputOutputE.second << endl;
+            cout << endl;
+            Utilities::printArchMatrix_CE_E( matVariable_CE_E );
+            cout << endl;
             // End test
-         
          }
-         else // TO BE DONE
+         else // Fill with zeros???
          {
-//            matVariable_CE_E = [];
-//            in_E_num = 0;
-//            out_E_num = 0;
+            inputOutputE.first = 0;
+            inputOutputE.second = 0;
+            vector<vector<int>> matVariable_CE_E(inputOutputE.second, vector<int>(inputOutputE.first, 0));
+
             cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " CE_E architecture not detected! To be done --> Generating an empty array!" << endl;
          }
+
   
-  
+
+// ******************************************
+// Read CE_H VH files and architecture matrix
+// ******************************************
    
-   
-// ***********************************
-// Read CE_H VH files and create array
-// ***********************************
-   
-         filesystem::path filePath_CE_H_arch(fileName_H_arch);
+         filesystem::path filePath_CE_H_arch(fileName_CE_H_arch);
          if (filesystem::exists(filePath_CE_H_arch) && filesystem::is_regular_file(filePath_CE_H_arch))
          {
             cout << "The file " << filePath_CE_H_arch << " exists." << endl;
             
             // Number of input and output lines is fetched
-            result_H = ts->getParametersFromVhFile(fileName_H_arch);
+            inputOutputH = ts->getParametersFromVhFile(fileName_CE_H_arch);
             
             // Input to output mapping is fetched
-            matVariable_CE_H = ts->vhArchInputToArrayCE_H( fileName_H_arch, result_H.second, result_H.first, STC_architecture);
+            matVariable_CE_H = ts->vhArchInputToArray_CE_H( fileName_CE_H_arch, inputOutputH.second, inputOutputH.first, STC_architecture);
             
        
             // Begin test                    
-            cout << "In H num: "  << result_H.first  << endl;
-            cout << "Out H num: " << result_H.second << endl;
-      
-            int sliceIndex{0};
-            for (const auto& slice : matVariable_CE_H)
-            {
-               cout << "Slice " << sliceIndex++ << ":\n";
-               for (const auto& row : slice)
-               {
-                  for (const auto& element : row)
-                  {
-                     cout << element << " ";
-                  }
-                  cout << endl;
-               }
-               cout << "----" << endl; // Separator between slices
-            }
+            cout << "Number of inputs: "  << inputOutputH.first  << endl;
+            cout << "Number of outputs: " << inputOutputH.second << endl;
+            cout << endl;
+            Utilities::printArchMatrix_CE_H( matVariable_CE_H );
+            cout << endl;
             // End test
-         
          }
-         else // TO BE DONE
+         else // Fill with zeros???
          {
-//            matVariable_CE_E = []
-//            in_E_num = 0
-//            out_E_num = 0
+            inputOutputH.first = 0;
+            inputOutputH.second = 0;
+            vector<vector<vector<int>>> output(inputOutputH.second, vector<vector<int>>(inputOutputH.second, vector<int>(0, 0)));
+            
             cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " CE_H architecture not detected! Generating an empty array!" << endl;
          }
 
-   
-   
    
    
 // ****************************************************************
@@ -139,13 +118,13 @@ int main()
 // Integer unpacking
 // ****************************************************************
    
-         filesystem::path filePath_E_inputs(fileName_E_energies);
-         if (filesystem::exists(fileName_E_energies) && filesystem::is_regular_file(fileName_E_energies))
+         filesystem::path filePath_E_inputs(fileName_CE_E_energies);
+         if (filesystem::exists(fileName_CE_E_energies) && filesystem::is_regular_file(fileName_CE_E_energies))
          {
-            cout << "The file " << fileName_E_energies << " exists." << endl;
+            cout << "The file " << fileName_CE_E_energies << " exists." << endl;
             
             // Read input energies
-            auto inputArray_E = ts->readInputEnergiesE(fileName_E_energies);
+            auto inputArray_E = ts->readInputEnergiesE(fileName_CE_E_energies);
             
             // Test: print energies
             cout << "inputArray_E" << endl;
@@ -224,7 +203,7 @@ int main()
          }
          else
          {
-            vector<int> outputValues_E(result_E.second, 0);
+            vector<int> outputValues_E(inputOutputE.second, 0);
             cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " E inputs not detected! Filling output with zeros!" << endl;  
          }
 
@@ -235,15 +214,15 @@ int main()
 // Read CE_H input energies - assumption: inputs are in 5E3M format
 // ****************************************************************
    
-         filesystem::path filePath_H_inputs(fileName_H_energies);
-         if (filesystem::exists(fileName_H_energies) && filesystem::is_regular_file(fileName_H_energies))
+         filesystem::path filePath_H_inputs(fileName_CE_H_energies);
+         if (filesystem::exists(fileName_CE_H_energies) && filesystem::is_regular_file(fileName_CE_H_energies))
          {
-            cout << "The file " << fileName_H_energies << " exists." << endl;
+            cout << "The file " << fileName_CE_H_energies << " exists." << endl;
             
             
             
             // Read input energies
-            auto inputArray_H = ts->readInputEnergiesH(fileName_H_energies, result_H.first);
+            auto inputArray_H = ts->readInputEnergiesH(fileName_CE_H_energies, inputOutputH.first);
       
             // Test: print energies
             cout << endl << "inputArray_H" << endl;
@@ -358,7 +337,7 @@ int main()
          }
          else
          {
-            vector<int> outputValues_H(result_H.second, 0);
+            vector<int> outputValues_H(inputOutputH.second, 0);
             cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " H inputs not detected! Filling output with zeros!" << endl;  
          }         
          
