@@ -26,7 +26,7 @@ vector<uint64_t> Utilities::unpack5e3mToInt( const vector<uint64_t>& inputData )
    
    vector<uint64_t> output;
    
-   for (int num : inputData)
+   for (auto num : inputData)
    {
       // Make sure the input number is an 8-bit number
       if (num >= 0x100)
@@ -36,10 +36,11 @@ vector<uint64_t> Utilities::unpack5e3mToInt( const vector<uint64_t>& inputData )
 
       // Extract exponent (e) and mantissa (m)
       int e = (num >> 3) & 0x1F;  // First 5 bits as exponent
-      int m = num & 0x07;         // Last 3 bits as mantissa
+      uint64_t m = num & 0x07;    // Last 3 bits as mantissa
 
       // Calculate the unpacked integer
-      int unpackedValue;
+      uint64_t unpackedValue;
+      
       if (e == 0)
       {
          unpackedValue = m;
@@ -52,6 +53,8 @@ vector<uint64_t> Utilities::unpack5e3mToInt( const vector<uint64_t>& inputData )
       {
          unpackedValue = (16 + 2 * m + 1) << (e - 2);
       }
+
+//      cout << "unpackedValue = " << unpackedValue << ", ";
 
       // Add the unpacked value to the result vector
       output.push_back(unpackedValue);
@@ -73,7 +76,7 @@ vector<vector<uint64_t>> Utilities::unpack5e4mToInt( const vector<vector<uint64_
    {
       for (size_t j = 0; j < inputData[i].size(); ++j)
       {
-         int num = inputData[i][j];
+         uint64_t num = inputData[i][j];
          
          // Ensure the input is a 9-bit number
 //         assert(num < 0x200);
@@ -86,7 +89,7 @@ vector<vector<uint64_t>> Utilities::unpack5e4mToInt( const vector<vector<uint64_
 
          // Extract exponent (e) and mantissa (m)
          int e = (num >> 4) & 0x1F; // First 5 bits as exponent
-         int m = num & 0x0F;        // Last 4 bits as mantissa
+         uint64_t m = num & 0x0F;   // Last 4 bits as mantissa
 
          // Apply the unpacking logic
          if (e == 0)
@@ -124,7 +127,7 @@ vector<uint64_t> Utilities::pack4e4mFromInt( const vector<uint64_t>& inputData )
       // If energy is less than 16, return it directly
       if (energy < 16)
       {
-         output.push_back(static_cast<uint64_t>(energy));
+         output.push_back(energy);
          continue;
       }
 

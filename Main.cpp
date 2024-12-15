@@ -14,23 +14,25 @@ int main()
 //   bool debugMode{false};
 //   bool filesCreatedFlag{false};
    
-   int num_of_sectors{2}; // 3 sectors
-   int num_of_boards{7};  // 14 boards
+   int numOfSectors{3}; // 3 120 degrees HGCAL sectors
+   int numOfBoards{14};  // 14 Phase-1 TPG Serenity boards per HGCAL sector
+   
 
-   for (int i_sector = 1; i_sector < num_of_sectors; ++i_sector)
+   for (int iSector = 0; iSector < numOfSectors; ++iSector)
    {
-      for (int i_board = 6; i_board < num_of_boards; ++i_board)
+      for (int iBoard = 0; iBoard < numOfBoards; ++iBoard)
       {
    
          // Define everything needed to read mapping and architecture.
-         string input_folder_arch     = "./inputs/Arhitecture/v2";
-         string input_folder_energies = "./inputs/Energies/Stage1_Unpacker";
+         string inputFolderArch     = "./input/arhitecture/v2";
+         string inputFolderEnergies = "./input/energies/stage_1_unpacker/SinglePhotonPU0V16";
+//         string input_folder_energies = "./input/energies/stage_1_unpacker/SinglePionPU0V16";
            
-         string fileName_CE_E_arch = input_folder_arch + "/CE_E_" + to_string(i_board) + "_v2.vh";
-         string fileName_CE_H_arch = input_folder_arch + "/CE_H_" + to_string(i_board) + "_v2.vh";
+         string fileName_CE_E_arch = inputFolderArch + "/CE_E_" + to_string(iBoard) + "_v2.vh";
+         string fileName_CE_H_arch = inputFolderArch + "/CE_H_" + to_string(iBoard) + "_v2.vh";
           
-         string fileName_CE_E_energies = input_folder_energies + "/CEE/Sector_" + to_string(i_sector) + "_Board_" + to_string(i_board) + ".txt";
-         string fileName_CE_H_energies = input_folder_energies + "/CEH/Sector_" + to_string(i_sector) + "_Board_" + to_string(i_board) + ".txt";
+         string fileName_CE_E_energies = inputFolderEnergies + "/CE_E/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
+         string fileName_CE_H_energies = inputFolderEnergies + "/CE_H/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
            
          string STC_architecture = "oneSize"; // STC4, STC16 or oneSize
            
@@ -50,7 +52,7 @@ int main()
          filesystem::path filePath_CE_E_arch(fileName_CE_E_arch);
          if (filesystem::exists(filePath_CE_E_arch) && filesystem::is_regular_file(filePath_CE_E_arch))
          {
-            cout << "The file " << filePath_CE_E_arch << " exists." << endl;
+            cout << endl << "The file " << filePath_CE_E_arch << " exists." << endl;
             
             // Number of input and output lines is fetched
             inputOutputE = ts->getParametersFromVhFile(fileName_CE_E_arch);
@@ -63,7 +65,7 @@ int main()
             cout << "Number of inputs: "  << inputOutputE.first  << endl;
             cout << "Number of outputs: " << inputOutputE.second << endl;
             cout << endl;
-            Utilities::printArchMatrix_CE_E( matVariable_CE_E );
+//            Utilities::printArchMatrix_CE_E( matVariable_CE_E );
             cout << endl;
             // End test
          }
@@ -73,7 +75,7 @@ int main()
             inputOutputE.second = 0;
             vector<vector<int>> matVariable_CE_E(inputOutputE.second, vector<int>(inputOutputE.first, 0));
 
-            cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " CE_E architecture not detected! To be done --> Generating an empty array!" << endl;
+            cout << "Sector " + to_string(iSector) + "Board " + to_string(iBoard) + " CE_E architecture not detected! To be done --> Generating an empty array!" << endl;
          }
 
   
@@ -98,7 +100,7 @@ int main()
             cout << "Number of inputs: "  << inputOutputH.first  << endl;
             cout << "Number of outputs: " << inputOutputH.second << endl;
             cout << endl;
-            Utilities::printArchMatrix_CE_H( matVariable_CE_H );
+//            Utilities::printArchMatrix_CE_H( matVariable_CE_H );
             cout << endl;
             // End test
          }
@@ -108,7 +110,7 @@ int main()
             inputOutputH.second = 0;
             vector<vector<vector<int>>> output(inputOutputH.second, vector<vector<int>>(inputOutputH.second, vector<int>(0, 0)));
             
-            cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " CE_H architecture not detected! Generating an empty array!" << endl;
+            cout << "Sector " + to_string(iSector) + "Board " + to_string(iBoard) + " CE_H architecture not detected! Generating an empty array!" << endl;
          }
 
    
@@ -116,96 +118,126 @@ int main()
 // ****************************************************************
 // Read CE_E input energies - assumption: inputs are in 5E3M format
 // Integer unpacking
+// Performing summation
+// Overflow checking
+// Trimming
+// Packing to 4e4M format
 // ****************************************************************
    
          filesystem::path filePath_E_inputs(fileName_CE_E_energies);
          if (filesystem::exists(fileName_CE_E_energies) && filesystem::is_regular_file(fileName_CE_E_energies))
          {
-            cout << "The file " << fileName_CE_E_energies << " exists." << endl;
+            cout << endl << "The file " << fileName_CE_E_energies << " exists." << endl;
             
-            // Read input energies
-            auto inputArray_E = ts->readInputEnergiesE(fileName_CE_E_energies);
+            
+            // Generate inputs in decimal format (up to a value of 255).
+            // Assumption: Inputs are in 5E3M format.
+            auto inputArray_CE_E = ts->readInputEnergies_CE_E(fileName_CE_E_energies);
             
             // Test: print energies
-            cout << "inputArray_E" << endl;
-            for (int energy : inputArray_E)
+            cout << endl
+                 << "======================================" << endl
+                 << "           inputArray_CE_E            " << endl
+                 << "======================================" << endl;
+            for (int energy : inputArray_CE_E)
             {
                cout << energy << ", ";
             }
             cout << endl;
+            // End test
             
             
-            
-            // Integer unpacking
-            auto decodedInputArrayE = ts->unpackInteger3m(inputArray_E);
+ 
+            // Integer unpacking.
+            auto decodedInputArray_CE_E = ts->unpackInteger3m(inputArray_CE_E);
             
             // Test: print decoded energies
-            cout << "decodedInputArrayE" << endl;
-            for (int energy : decodedInputArrayE)
+            cout << endl
+                 << "=============================================" << endl
+                 << "           decodedInputArray_CE_E            " << endl
+                 << "=============================================" << endl;
+            for (auto energy : decodedInputArray_CE_E)
             {
                cout << energy << ", ";
             }
             cout << endl;
+            // End test
             
             
             
-            // Doing summation on upacked data (integers). Parameter 1 or 2 indicates the mode of summation (for study purposes different summation techniques have been implemented). 
-            // If version 2 is selected the subsequent false parameter is disregarded (i.e. it is a valid parameter only for version 1 of the sumator).
-            auto summedValues_E = ts->summation(decodedInputArrayE, matVariable_CE_E, 2, false);
+            // Performing summation on unpacked data (integers). Parameter 1 or 2 indicates the mode of summation (for study purposes, different summation techniques have been implemented). 
+            // If version 2 is selected, the subsequent false parameter is disregarded (i.e., it is valid only for version 1 of the summator).
+            auto summedValues_CE_E = ts->summation(decodedInputArray_CE_E, matVariable_CE_E, 2, false);
             
             // Test: print summed values
-            cout << "summedValues_E" << endl;
-            for (int value : summedValues_E)
+            cout << endl << "summedValues_CE_E" << endl;
+            for (auto value : summedValues_CE_E)
             {
                cout << value << ", ";
             }
             cout << endl;
+            // End test
             
             
             
-            // Second parameter is maximum number of allowed bits, 34 bits in case of 5E3M
-            auto checkedOutputValues_E = ts->overflowChecker(summedValues_E, 34);
+            // Checking for summation overflow (which can not be correctly coded with 5E3M format).
+            // Second parameter is maximum number of allowed bits, 34 bits in case of 5E3M.
+            auto checkedOutputValues_CE_E = ts->overflowChecker(summedValues_CE_E, 34);
 
             // Test: print checked values
-            cout << "checkedOutputValues_E" << endl;
-            for (int value : checkedOutputValues_E)
+            cout << endl << "checkedOutputValues_CE_E" << endl;
+            for (auto value : checkedOutputValues_CE_E)
             {
                cout << value << ", ";
             }
             cout << endl;
+            // End test
             
             
             
-            // Trimming to 19 bit (4E4M) - taking first 19 MSBs  (requied parameters> targetNumberBits, maxNzmberBits)
-            auto trimmedOutputValues_E = ts->trimming(checkedOutputValues_E, 19, 34);
+            // Trimming to 19 bits (4E4M) - taking the first 19 MSBs (required parameters: targetNumberBits, maxNumberBits).
+            auto trimmedOutputValues_CE_E = ts->trimming(checkedOutputValues_CE_E, 19, 34);
                   
             // Test: print trimmed values
-            cout << endl << "trimmedOutputValues_E" << endl;
-            for (int value : trimmedOutputValues_E)
+            cout << endl << "trimmedOutputValues_CE_E" << endl;
+            for (auto value : trimmedOutputValues_CE_E)
             {
                cout << value << ", ";
             }
             cout << endl;
+            // End test
             
             
             
-            // Converting the summs from pure integer number format to 4E4M format
-            auto outputValues_E = ts->packInteger4e4m(trimmedOutputValues_E);
+            // Converting the sums from pure integer format to 4E4M format.
+            auto outputValues_CE_E = ts->packInteger4e4m(trimmedOutputValues_CE_E);
             
             // Test: print output values
-            cout << endl << "outputValues_E" << endl;
+            cout << endl
+                 << "========================================" << endl
+                 << "           outputValues_CE_E            " << endl
+                 << "========================================" << endl;
             cout << "[";
-            for (int value : outputValues_E)
+            for (auto value : outputValues_CE_E)
             {
                cout << value << ", ";
             }
             cout << "]" << endl;
+            // End test
+            
+            
+            // Write energies in hex format to file
+            size_t lastSlashPos = inputFolderEnergies.find_last_of('/');
+            string lastWord = inputFolderEnergies.substr(lastSlashPos + 1);
+            ts->writeToFile(outputValues_CE_E, iSector, iBoard, "CE_E", lastWord);
+            
          }
          else
          {
-            vector<int> outputValues_E(inputOutputE.second, 0);
-            cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " E inputs not detected! Filling output with zeros!" << endl;  
+            vector<int> outputValues_CE_E(inputOutputE.second, 0);
+            cout << "Sector " + to_string(iSector) + "Board " + to_string(iBoard) + " E inputs not detected! Filling output with zeros!" << endl;  
          }
+
 
 
 
@@ -222,7 +254,7 @@ int main()
             
             
             // Read input energies
-            auto inputArray_H = ts->readInputEnergiesH(fileName_CE_H_energies, inputOutputH.first);
+            auto inputArray_H = ts->readInputEnergies_CE_H(fileName_CE_H_energies, inputOutputH.first);
       
             // Test: print energies
             cout << endl << "inputArray_H" << endl;
@@ -289,7 +321,7 @@ int main()
 
             // Test: print summed values
             cout << "summedValues_H" << endl;
-            for (int value : summedValues_H)
+            for (auto value : summedValues_H)
             {
                cout << value << ", ";
             }
@@ -302,7 +334,7 @@ int main()
  
             // Test: print checked values
             cout << "checkedOutputValues_H" << endl;
-            for (int value : checkedOutputValues_H)
+            for (auto value : checkedOutputValues_H)
             {
                cout << value << ", ";
             }
@@ -315,7 +347,7 @@ int main()
             
             // Test: print trimmed values
             cout << endl << "trimmedOutputValues_H" << endl;
-            for (int value : trimmedOutputValues_H)
+            for (auto value : trimmedOutputValues_H)
             {
                cout << value << ", ";
             }
@@ -329,20 +361,30 @@ int main()
             // Test: print output values
             cout << endl << "outputValues_H" << endl;
             cout << "[";
-            for (int value : outputValues_H)
+            for (auto value : outputValues_H)
             {
                cout << value << ", ";
             }
             cout << "]" << endl;
+            // End test
+
+            
+            // Write energies in hex format to file
+            size_t lastSlashPos = inputFolderEnergies.find_last_of('/');
+            string lastWord = inputFolderEnergies.substr(lastSlashPos + 1);
+            ts->writeToFile(outputValues_H, iSector, iBoard, "CE_H", lastWord);
+            
          }
          else
          {
             vector<int> outputValues_H(inputOutputH.second, 0);
-            cout << "Sector " + to_string(i_sector) + "Board " + to_string(i_board) + " H inputs not detected! Filling output with zeros!" << endl;  
+            cout << "Sector " + to_string(iSector) + "Board " + to_string(iBoard) + " H inputs not detected! Filling output with zeros!" << endl;  
          }         
          
-      } //End i_sector
-   } //End i_board
+
+         
+      } //End iSector
+   } //End iBoard
       
    
    return 0;

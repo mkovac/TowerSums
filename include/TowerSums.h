@@ -4,6 +4,8 @@
 // C++
 #include <iostream>
 #include <fstream>
+#include <filesystem>
+#include <iomanip>
 #include <vector>
 #include <cstdlib>
 #include <sstream>
@@ -33,8 +35,8 @@ public:
    vector<vector<int>> vhArchInputToArray_CE_E( const string& , int, int );
    vector<vector<vector<int>>> vhArchInputToArray_CE_H( const string& , int, int, const string& );
    
-   vector<uint64_t>         readInputEnergiesE( const string& );
-   vector<vector<uint64_t>> readInputEnergiesH( const string&, int );
+   vector<uint64_t>         readInputEnergies_CE_E( const string& );
+   vector<vector<uint64_t>> readInputEnergies_CE_H( const string&, int );
    
    vector<uint64_t>         unpackInteger3m( const vector<uint64_t>& );
    vector<vector<uint64_t>> unpackInteger4m( const vector<vector<uint64_t>>& );
@@ -48,12 +50,12 @@ public:
    vector<string> generateInputShifts( int, int );
    
    vector<uint64_t> addVectors(const vector<uint64_t>&, const vector<uint64_t>& );
-
+   
+   void writeToFile( const vector<uint64_t>& , int , int , const string&, const string& );
 
 private:
 
    Utilities *utilities;
-
 
 };
 #endif

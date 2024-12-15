@@ -31,3 +31,9 @@
 *.out
 *.app
 run
+
+# Cache directories
+__pycache__/
+ 
+# Output directories
+output

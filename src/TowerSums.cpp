@@ -33,7 +33,6 @@ pair<int, int> TowerSums::getParametersFromVhFile( const string& inputFileName )
    int numInputs = 0;
    int numOutputs = 0;
    
-   
    regex inputRegex(R"(/\* num inputs = (\d+).*\*/)");
    regex outputRegex(R"(/\* num outputs = (\d+).*\*/)");
    smatch match;
@@ -242,8 +241,8 @@ vector<vector<vector<int>>> TowerSums::vhArchInputToArray_CE_H( const string& in
 
 
 
-//===========================================================================
-vector<uint64_t> TowerSums::readInputEnergiesE( const string& inputFileName )
+//===============================================================================
+vector<uint64_t> TowerSums::readInputEnergies_CE_E( const string& inputFileName )
 {
    
    vector<uint64_t> output;
@@ -259,19 +258,19 @@ vector<uint64_t> TowerSums::readInputEnergiesE( const string& inputFileName )
    while (getline(inputFile, line))
    {
       // Convert the binary string to an integer
-      int value = stoi(line, nullptr, 2);
+      uint64_t value = stoi(line, nullptr, 2);
       output.push_back(value);
    }
    
    inputFile.close();
    return output;
 }
-//===========================================================================
+//===============================================================================
 
 
 
 //===================================================================================================
-vector<vector<uint64_t>> TowerSums::readInputEnergiesH( const string& inputFileName, int input_size )
+vector<vector<uint64_t>> TowerSums::readInputEnergies_CE_H( const string& inputFileName, int input_size )
 {
    
    vector<vector<uint64_t>> output(6, vector<uint64_t>(input_size, 0));
@@ -351,8 +350,6 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
 {
    vector<uint64_t> output;
    
-//   int outputControlNo = 467;
-
    for (size_t i = 0; i < matrixArc.size(); i++)
    {
       if (summatorVersion == 1)
@@ -978,4 +975,68 @@ vector<string> TowerSums::generateInputShifts( int numberOfItems, int noOfBits )
    return output;
 }
 //==============================================================================
+
+
+
+//=================================================================================================================================
+void TowerSums::writeToFile( const vector<uint64_t>& outputValues, int sector, int board, const string& CE_X, const string& sample)
+{
+   
+   // Define the directory path
+    filesystem::path dirPath = "./output/stage_1_tower_sums";
+    dirPath /= sample;
+    dirPath /= CE_X;
+
+   // Check if the directory exists
+   if (!std::filesystem::exists(dirPath))
+   {
+      // Create the directory (including any parent directories)
+      if (filesystem::create_directories(dirPath))
+      {
+         cout << "Directory created successfully: " << dirPath << endl;
+      }
+      else
+      {
+         cerr << "Failed to create directory: " << dirPath << endl;
+      }
+   }
+   else
+   {
+      cout << "Directory already exists: " << dirPath << endl;
+   }
+   
+   
+   // Construct the file path
+   ostringstream filename;
+   filename << dirPath.string() << "/TowerSums_Sector_" << sector << "_Board_" << board << "_" << CE_X << ".txt";
+
+    // Open the file for writing
+    ofstream outFile(filename.str());
+
+    // Check if the file is open
+    if (!outFile.is_open())
+    {
+      cerr << "Error: Could not open the file " << filename.str() << endl;
+      return;
+    }
+
+    // Write the vector values to the file
+    for (size_t k = 0; k < outputValues.size(); ++k)
+    {
+      // Format each value as a two-digit hexadecimal
+      outFile << setw(2) << setfill('0') << hex << outputValues[k];
+        
+      // If this is not the last element, write a newline
+      if (k != outputValues.size() - 1)
+      {
+         outFile << "\n";
+      }
+   }
+
+   // Close the file
+   outFile.close();
+    
+}
+//=================================================================================================================================
+
 
