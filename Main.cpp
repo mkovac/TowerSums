@@ -25,14 +25,13 @@ int main()
    
          // Define everything needed to read mapping and architecture.
          string inputFolderArch     = "./input/arhitecture/v2";
-         string inputFolderEnergies = "./input/energies/stage_1_unpacker/SinglePhotonPU0V16";
-//         string input_folder_energies = "./input/energies/stage_1_unpacker/SinglePionPU0V16";
+         string inputFolderEnergies = "./input/energies/stage_1_unpacker/";
            
          string fileName_CE_E_arch = inputFolderArch + "/CE_E_" + to_string(iBoard) + "_v2.vh";
          string fileName_CE_H_arch = inputFolderArch + "/CE_H_" + to_string(iBoard) + "_v2.vh";
           
-         string fileName_CE_E_energies = inputFolderEnergies + "/CE_E/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
-         string fileName_CE_H_energies = inputFolderEnergies + "/CE_H/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
+         string fileName_CE_E_energies = inputFolderEnergies + "/SinglePhotonPU0V16/CE_E/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
+         string fileName_CE_H_energies = inputFolderEnergies + "/SinglePionPU0V16/CE_H/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
            
          string STC_architecture = "oneSize"; // STC4, STC16 or oneSize
            
@@ -227,9 +226,7 @@ int main()
             
             
             // Write energies in hex format to file
-            size_t lastSlashPos = inputFolderEnergies.find_last_of('/');
-            string lastWord = inputFolderEnergies.substr(lastSlashPos + 1);
-            ts->writeToFile(outputValues_CE_E, iSector, iBoard, "CE_E", lastWord);
+            ts->writeToFile(outputValues_CE_E, iSector, iBoard, "CE_E");
             
          }
          else
@@ -370,9 +367,7 @@ int main()
 
             
             // Write energies in hex format to file
-            size_t lastSlashPos = inputFolderEnergies.find_last_of('/');
-            string lastWord = inputFolderEnergies.substr(lastSlashPos + 1);
-            ts->writeToFile(outputValues_H, iSector, iBoard, "CE_H", lastWord);
+            ts->writeToFile(outputValues_H, iSector, iBoard, "CE_H");
             
          }
          else

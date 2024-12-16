@@ -978,13 +978,12 @@ vector<string> TowerSums::generateInputShifts( int numberOfItems, int noOfBits )
 
 
 
-//=================================================================================================================================
-void TowerSums::writeToFile( const vector<uint64_t>& outputValues, int sector, int board, const string& CE_X, const string& sample)
+//===========================================================================================================
+void TowerSums::writeToFile( const vector<uint64_t>& outputValues, int sector, int board, const string& CE_X)
 {
    
    // Define the directory path
     filesystem::path dirPath = "./output/stage_1_tower_sums";
-    dirPath /= sample;
     dirPath /= CE_X;
 
    // Check if the directory exists
@@ -1037,6 +1036,6 @@ void TowerSums::writeToFile( const vector<uint64_t>& outputValues, int sector, i
    outFile.close();
     
 }
-//=================================================================================================================================
+//===========================================================================================================
 
 

@@ -27,8 +27,8 @@ class TowerSums
 
 public:
 	
-	TowerSums();
-	~TowerSums();
+   TowerSums();
+   ~TowerSums();
    
    pair<int, int> getParametersFromVhFile( const string& );
    
@@ -51,7 +51,7 @@ public:
    
    vector<uint64_t> addVectors(const vector<uint64_t>&, const vector<uint64_t>& );
    
-   void writeToFile( const vector<uint64_t>& , int , int , const string&, const string& );
+   void writeToFile( const vector<uint64_t>& , int , int , const string& );
 
 private:
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Base paths
-current_dir="./output/stage_1_tower_sums/SinglePhotonPU0V16/CE_E"
+current_dir="./output/stage_1_tower_sums/CE_E"
 afs_dir="/afs/cern.ch/work/m/mkovac/CMS/HGCAL/CMSSW_13_3_0/src/TPGStage1/Emulator/output/Stage1_TowerSums"
 
 # Loop over sectors (0 to 6)

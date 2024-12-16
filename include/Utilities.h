@@ -15,8 +15,8 @@ class Utilities
 
 public:
 	
-	Utilities();
-	~Utilities();
+   Utilities();
+   ~Utilities();
    
    vector<uint64_t>         unpack5e3mToInt( const vector<uint64_t>& );
    vector<vector<uint64_t>> unpack5e4mToInt( const vector<vector<uint64_t>>& );
