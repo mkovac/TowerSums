@@ -2,7 +2,7 @@
 
 import random, re, sys, os, math
 import numpy as np
-import packingHelper as pkg
+import packing_helper as pkg
 
 # for debuging pruposes
 np.set_printoptions(threshold=sys.maxsize)
@@ -552,18 +552,18 @@ def packInteger4E4M(inputData):
 #****************************
 
 #for debuging (writing intermediate results to console)
-debugMode = True
+debugMode = False
 
 #Going over all 3 sectors
-for s in range(3): #3
+for s in range(3):
     #Going over all of 14 boards
-    for i in range(14): #14
+    for i in range(14): #14:
         #defining names of file from which to read mapping and architecture. Currently we chose board #3 so it will be used here.
         fileName_CE_E_Architecture = '../input/arhitecture/v2/CE_E_' + str(i) + '_v2.vh'
         fileName_CE_H_Architecture = '../input/arhitecture/v2/CE_H_' + str(i) + '_v2.vh'
 
         fileName_CE_E_Inputs = '../input/energies/stage_1_unpacker/SinglePhotonPU0V16/CE_E/Sector_' + str(s) + '_Board_' + str(i) + '.txt'
-        fileName_CE_H_Inputs = '../input/energies/stage_1_unpacker/SinglePhotonPU0V16/CE_H/Sector_' + str(s) + '_Board_' + str(i) + '.txt'
+        fileName_CE_H_Inputs = '../input/energies/stage_1_unpacker/SinglePionPU0V16/CE_H/Sector_' + str(s) + '_Board_' + str(i) + '.txt'
 
         STC_architecture = 'oneSize' #or STC4, STC16 or oneSize
 
@@ -686,7 +686,7 @@ for s in range(3): #3
 
 
     # #***********Writing files - CE_E channel*********************
-        with open(os.path.join('./Stage1_TowerSums/', 'TowerSums_Sector_' + str(s) + '_Board_' + str(i) + '_CE_E' + '.txt'), 'w') as f:
+        with open(os.path.join('./output/Stage1_TowerSums/', 'TowerSums_Sector_' + str(s) + '_Board_' + str(i) + '_CE_E' + '.txt'), 'w') as f:
             for k in range (len(outputValues_CE_E)):
                 if k == len(outputValues_CE_E)-1:
                     f.write(f"{outputValues_CE_E[k]:02x}")
@@ -695,7 +695,7 @@ for s in range(3): #3
 
 
     # #***********Writing files - CE_H channel_Trimmed*********************
-        with open(os.path.join('./Stage1_TowerSums/', 'TowerSums_Sector_' + str(s) + '_Board_' + str(i) + '_CE_H' + '.txt'), 'w') as f:
+        with open(os.path.join('./output/Stage1_TowerSums/', 'TowerSums_Sector_' + str(s) + '_Board_' + str(i) + '_CE_H' + '.txt'), 'w') as f:
              for n in range (len(outputValues_CE_H)):
                 if n == len(outputValues_CE_H)-1:
                     f.write(f"{outputValues_CE_H[n]:02x}")
