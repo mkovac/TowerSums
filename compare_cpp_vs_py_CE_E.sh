@@ -1,8 +1,12 @@
 #!/bin/bash
 
 # Base paths
-cpp_dir="./output/stage_1_tower_sums/CE_E"
-python_dir="./python/output/Stage1_TowerSums"
+#cpp_dir="./output/stage_1_tower_sums/CE_E"
+#python_dir="./python/output/Stage1_TowerSums"
+
+cpp_dir="./output/v241217//CE_E"
+python_dir="./python/output/v241217/"
+
 
 # Loop over sectors (0 to 6)
 for sector in {0..2}; do

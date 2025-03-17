@@ -14,8 +14,8 @@ int main()
 //   bool debugMode{false};
 //   bool filesCreatedFlag{false};
    
-   int numOfSectors{3}; // 3 120 degrees HGCAL sectors
-   int numOfBoards{14};  // 14 Phase-1 TPG Serenity boards per HGCAL sector
+   int numOfSectors{1}; // 3 120 degrees HGCAL sectors
+   int numOfBoards{1};  // 14 Phase-1 TPG Serenity boards per HGCAL sector
    
 
    for (int iSector = 0; iSector < numOfSectors; ++iSector)
@@ -24,20 +24,25 @@ int main()
       {
    
          // Define everything needed to read mapping and architecture.
-         string inputFolderArch     = "./input/arhitecture/v2";
-//         string inputFolderArch     = "./input/arhitecture/v241217";
+//         string inputFolderArch     = "./input/arhitecture/v2";
+         string inputFolderArch     = "./input/arhitecture/v241217";
 
-         string inputFolderEnergies = "./input/energies/stage_1_unpacker/";
+//         string inputFolderEnergies = "./input/energies/stage_1_unpacker";
+         string inputFolderEnergies = "./input/energies/v241217";
+         
            
-         string fileName_CE_E_arch = inputFolderArch + "/CE_E_" + to_string(iBoard) + "_v2.vh";
-         string fileName_CE_H_arch = inputFolderArch + "/CE_H_" + to_string(iBoard) + "_v2.vh";
+//         string fileName_CE_E_arch = inputFolderArch + "/CE_E_" + to_string(iBoard) + "_v2.vh";
+//         string fileName_CE_H_arch = inputFolderArch + "/CE_H_" + to_string(iBoard) + "_v2.vh";
 
-//         string fileName_CE_E_arch = inputFolderArch + "/CE_E_dummy_20x30_241217.vh";
-//         string fileName_CE_H_arch = inputFolderArch + "/CE_H_dummy_20x30_241217.vh";
+         string fileName_CE_E_arch = inputFolderArch + "/CE_E_dummy_20x30_241217.vh";
+         string fileName_CE_H_arch = inputFolderArch + "/CE_H_dummy_20x30_241217.vh";
          
           
-         string fileName_CE_E_energies = inputFolderEnergies + "/SinglePhotonPU0V16/CE_E/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
-         string fileName_CE_H_energies = inputFolderEnergies + "/SinglePionPU0V16/CE_H/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
+//         string fileName_CE_E_energies = inputFolderEnergies + "/SinglePhotonPU0V16/CE_E/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
+//         string fileName_CE_H_energies = inputFolderEnergies + "/SinglePionPU0V16/CE_H/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + ".txt";
+
+         string fileName_CE_E_energies = inputFolderEnergies + "/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + "_CE_E.txt";
+         string fileName_CE_H_energies = inputFolderEnergies + "/Sector_" + to_string(iSector) + "_Board_" + to_string(iBoard) + "_CE_H.txt";
            
          string STC_architecture = "oneSize"; // STC4, STC16 or oneSize
            
@@ -247,7 +252,7 @@ int main()
          else
          {
             vector<int> outputValues_CE_E(inputOutput_CE_E.second, 0);
-            cout << "Sector " + to_string(iSector) + "Board " + to_string(iBoard) + " E inputs not detected! Filling output with zeros!" << endl;  
+            cout << "Sector " + to_string(iSector) + " Board " + to_string(iBoard) + " E inputs not detected! Filling output with zeros!" << endl;  
          }
 
 
@@ -348,7 +353,7 @@ int main()
             
                
             
-            // Second parameter is maximum number of allowed bits, 34 bits in case of 5E3M
+            // Second parameter is maximum number of allowed bits, 35 bits in case of 5E4M
             auto checkedOutputValues_CE_H = ts->overflowChecker(summedValues_CE_H, 35);
  
             // Test: print checked values
@@ -364,7 +369,7 @@ int main()
             
             
             
-            // Trimming to 19 bit (4E4M) - taking first 19 MSBs  (requied parameters> targetNumberBits, maxNzmberBits)
+            // Trimming to 19 bit (4E4M) - taking first 19 MSBs  (requied parameters> targetNumberBits, maxNumberBits)
             auto trimmedOutputValues_CE_H = ts->trimming(checkedOutputValues_CE_H, 19, 35);
             
             // Test: print trimmed values

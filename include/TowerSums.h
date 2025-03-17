@@ -32,7 +32,7 @@ public:
    
    pair<int, int> getParametersFromVhFile( const string& );
    
-   vector<vector<int>> vhArchInputToArray_CE_E( const string& , int, int );
+   vector<vector<int>>         vhArchInputToArray_CE_E( const string& , int, int );
    vector<vector<vector<int>>> vhArchInputToArray_CE_H( const string& , int, int, const string& );
    
    vector<uint64_t>         readInputEnergies_CE_E( const string& );

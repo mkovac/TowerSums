@@ -365,9 +365,9 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 1)
             {
-               int temp1 = inputData[j] >> 4;
+               int temp1 =  inputData.at(j)  >> 4;
                
-               if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                     temp1 += 1;
                }
@@ -376,9 +376,9 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 2)
             {
-               int temp2 = inputData[j] >> 3;
+               int temp2 =  inputData.at(j)  >> 3;
                
-               if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                     temp2 += 1;
                }
@@ -387,19 +387,19 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 3)
             {
-               int temp3_1 = inputData[j] >> 3;
-               int temp3_2 = inputData[j] >> 4;
+               int temp3_1 =  inputData.at(j)  >> 3;
+               int temp3_2 =  inputData.at(j)  >> 4;
                
-               if (((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if ((( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp3_1 += 1;
                   temp3_2 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp3_1 += 1;
                }
-               else if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp3_2 += 1;
                }
@@ -408,9 +408,9 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 4)
             {
-               int temp4 = inputData[j] >> 2;
+               int temp4 =  inputData.at(j)  >> 2;
                
-               if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                     temp4 += 1;
                }
@@ -419,19 +419,19 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 5)
             {
-               int temp5_1 = inputData[j] >> 2;
-               int temp5_2 = inputData[j] >> 4;
+               int temp5_1 =  inputData.at(j)  >> 2;
+               int temp5_2 =  inputData.at(j)  >> 4;
                
-               if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp5_1 += 1;
                   temp5_2 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp5_1 += 1;
                }
-               else if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp5_2 += 1;
                }
@@ -440,19 +440,19 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 6)
             {
-               int temp6_1 = inputData[j] >> 2;
-               int temp6_2 = inputData[j] >> 3;
+               int temp6_1 =  inputData.at(j)  >> 2;
+               int temp6_2 =  inputData.at(j)  >> 3;
                
-               if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp6_1 += 1;
                   temp6_2 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp6_1 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp6_2 += 1;
                }
@@ -461,40 +461,40 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 7)
             {
-               int temp7_1 = inputData[j] >> 2;
-               int temp7_2 = inputData[j] >> 3;
-               int temp7_3 = inputData[j] >> 4;
+               int temp7_1 =  inputData.at(j)  >> 2;
+               int temp7_2 =  inputData.at(j)  >> 3;
+               int temp7_3 =  inputData.at(j)  >> 4;
                
-               if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp7_1 += 1;
                   temp7_2 += 1;
                   temp7_3 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp7_1 += 1;
                   temp7_2 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp7_1 += 1;
                   temp7_3 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp7_2 += 1;
                   temp7_3 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp7_1 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp7_2 += 1;
                }
-               else if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp7_3 += 1;
                }
@@ -503,9 +503,9 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 8)
             {
-               int temp8 = inputData[j] >> 1;
+               int temp8 =  inputData.at(j)  >> 1;
               
-               if ((inputData[j] & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && summationTypeFlag)
                {
                   temp8 += 1;
                }
@@ -514,19 +514,19 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 9)
             {
-               int temp9_1 = inputData[j] >> 1;
-               int temp9_2 = inputData[j] >> 4;
+               int temp9_1 =  inputData.at(j)  >> 1;
+               int temp9_2 =  inputData.at(j)  >> 4;
                
-               if ((inputData[j] & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp9_1 += 1;
                   temp9_2 += 1;
                }
-               else if ((inputData[j] & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && summationTypeFlag)
                {
                   temp9_1 += 1;
                }
-               else if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp9_2 += 1;
                }
@@ -535,19 +535,19 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 10)
             {
-               int temp10_1 = inputData[j] >> 1;
-               int temp10_2 = inputData[j] >> 3;
+               int temp10_1 =  inputData.at(j)  >> 1;
+               int temp10_2 =  inputData.at(j)  >> 3;
                
-               if ((inputData[j] & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                     temp10_1 += 1;
                     temp10_2 += 1;
                }
-               else if ((inputData[j] & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && summationTypeFlag)
                {
                   temp10_1 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp10_2 += 1;
                }
@@ -556,40 +556,40 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 11)
             {
-               int temp11_1 = inputData[j] >> 1;
-               int temp11_2 = inputData[j] >> 3;
-               int temp11_3 = inputData[j] >> 4;
+               int temp11_1 =  inputData.at(j)  >> 1;
+               int temp11_2 =  inputData.at(j)  >> 3;
+               int temp11_3 =  inputData.at(j)  >> 4;
                
-               if ((inputData[j] & 1) && ((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp11_1 += 1;
                   temp11_2 += 1;
                   temp11_3 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp11_1 += 1;
                   temp11_2 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp11_1 += 1;
                   temp11_3 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp11_2 += 1;
                   temp11_3 += 1;
                }
-               else if ((inputData[j] & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && summationTypeFlag)
                {
                   temp11_1 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp11_2 += 1;
                }
-               else if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp11_3 += 1;
                }
@@ -598,19 +598,19 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 12)
             {
-               int temp12_1 = (inputData[j]) >> 1;
-               int temp12_2 = (inputData[j]) >> 2;
+               int temp12_1 = ( inputData.at(j) ) >> 1;
+               int temp12_2 = ( inputData.at(j) ) >> 2;
 
-               if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp12_1 += 1;
                   temp12_2 += 1;
                }
-               else if ((inputData[j] & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && summationTypeFlag)
                {
                   temp12_1 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp12_2 += 1;
                }
@@ -619,40 +619,40 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 13)
             {
-               int temp13_1 = (inputData[j]) >> 1;
-               int temp13_2 = (inputData[j]) >> 2;
-               int temp13_3 = (inputData[j]) >> 4;
+               int temp13_1 = ( inputData.at(j) ) >> 1;
+               int temp13_2 = ( inputData.at(j) ) >> 2;
+               int temp13_3 = ( inputData.at(j) ) >> 4;
 
-               if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp13_1 += 1;
                   temp13_2 += 1;
                   temp13_3 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp13_1 += 1;
                   temp13_2 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp13_1 += 1;
                   temp13_3 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp13_2 += 1;
                   temp13_3 += 1;
                }
-               else if ((inputData[j] & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && summationTypeFlag)
                {
                   temp13_1 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp13_2 += 1;
                }
-               else if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp13_3 += 1;
                }
@@ -661,40 +661,40 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 14)
             {
-               int temp14_1 = (inputData[j]) >> 1;
-               int temp14_2 = (inputData[j]) >> 2;
-               int temp14_3 = (inputData[j]) >> 3;
+               int temp14_1 = ( inputData.at(j) ) >> 1;
+               int temp14_2 = ( inputData.at(j) ) >> 2;
+               int temp14_3 = ( inputData.at(j) ) >> 3;
 
-               if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp14_1 += 1;
                   temp14_2 += 1;
                   temp14_3 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp14_1 += 1;
                   temp14_2 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp14_1 += 1;
                   temp14_3 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp14_2 += 1;
                   temp14_3 += 1;
                }
-               else if ((inputData[j] & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && summationTypeFlag)
                {
                   temp14_1 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp14_2 += 1;
                }
-               else if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp14_3 += 1;
                }
@@ -703,85 +703,85 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 15)
             {
-               int temp15_1 = (inputData[j]) >> 1;
-               int temp15_2 = (inputData[j]) >> 2;
-               int temp15_3 = (inputData[j]) >> 3;
-               int temp15_4 = (inputData[j]) >> 4;
+               int temp15_1 = ( inputData.at(j) ) >> 1;
+               int temp15_2 = ( inputData.at(j) ) >> 2;
+               int temp15_3 = ( inputData.at(j) ) >> 3;
+               int temp15_4 = ( inputData.at(j) ) >> 4;
 
-               if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_1 += 1;
                   temp15_2 += 1;
                   temp15_3 += 1;
                   temp15_4 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp15_1 += 1;
                   temp15_2 += 1;
                   temp15_3 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_1 += 1;
                   temp15_2 += 1;
                   temp15_4 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_1 += 1;
                   temp15_3 += 1;
                   temp15_4 += 1;
                }
-               else if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_2 += 1;
                   temp15_3 += 1;
                   temp15_4 += 1;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp15_1++;
                   temp15_2++;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp15_1++;
                   temp15_3++;
                }
-               else if ((inputData[j] & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if (( inputData.at(j)  & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_1++;
                   temp15_4++;
                }
-               else if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp15_2++;
                   temp15_3++;
                }
-               else if (((inputData[j] >> 1) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_2++;
                   temp15_4++;
                }
-               else if (((inputData[j] >> 2) & 1) && ((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && (( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_3++;
                   temp15_4++;
                }
-               else if (inputData[j] & 1)
+               else if ( inputData.at(j)  & 1)
                {
                   temp15_1++;
                }
-               else if (((inputData[j] >> 1) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 1) & 1) && summationTypeFlag)
                {
                   temp15_2++;
                }
-               else if (((inputData[j] >> 2) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 2) & 1) && summationTypeFlag)
                {
                   temp15_3++;
                }
-               else if (((inputData[j] >> 3) & 1) && summationTypeFlag)
+               else if ((( inputData.at(j)  >> 3) & 1) && summationTypeFlag)
                {
                   temp15_4++;
                }
@@ -790,7 +790,7 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 16)
             {
-               sumTemp += inputData[j];
+               sumTemp +=  inputData.at(j) ;
             }
             
             output.push_back(sumTemp);
@@ -812,67 +812,67 @@ vector<uint64_t> TowerSums::summation( const vector<uint64_t>& inputData, const 
             }
             else if (currentArc[j] == 1)
             {
-               sumTemp += inputData[j];
+               sumTemp +=  inputData.at(j) ;
             }
             else if (currentArc[j] == 2)
             {
-               sumTemp += 2 * inputData[j];
+               sumTemp += 2 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 3)
             {
-               sumTemp += 3 * inputData[j];
+               sumTemp += 3 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 4)
             {
-               sumTemp += 4 * inputData[j];
+               sumTemp += 4 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 5)
             {
-               sumTemp += 5 * inputData[j];
+               sumTemp += 5 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 6)
             {
-               sumTemp += 6 * inputData[j];
+               sumTemp += 6 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 7)
             {
-               sumTemp += 7 * inputData[j];
+               sumTemp += 7 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 8)
             {
-               sumTemp += 8 * inputData[j];
+               sumTemp += 8 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 9)
             {
-               sumTemp += 9 * inputData[j];
+               sumTemp += 9 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 10)
             {
-               sumTemp += 10 * inputData[j];
+               sumTemp += 10 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 11)
             {
-               sumTemp += 11 * inputData[j];
+               sumTemp += 11 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 12)
             {
-               sumTemp += 12 * inputData[j];
+               sumTemp += 12 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 13)
             {
-               sumTemp += 13 * inputData[j];
+               sumTemp += 13 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 14)
             {
-               sumTemp += 14 * inputData[j];
+               sumTemp += 14 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 15)
             {
-               sumTemp += 15 * inputData[j];
+               sumTemp += 15 *  inputData.at(j) ;
             }
             else if (currentArc[j] == 16)
             {
-               sumTemp += 16 * inputData[j];
+               sumTemp += 16 *  inputData.at(j) ;
             }
          } // End for loop
          
@@ -900,12 +900,12 @@ vector<uint64_t> TowerSums::overflowChecker(const vector<uint64_t>& inputData, i
       if (inputData[i] >> overflowBit)
       {
          // Overflow occurred, saturate to max value at overflowBit number of bits
-         int maxValue = (1 << overflowBit) - 1;  // Equivalent to '111...111' (overflowBit number of bits)
+         uint64_t maxValue = (uint64_t(1) << overflowBit) - 1;  // Equivalent to '111...111' (overflowBit number of bits)
          output.push_back(maxValue);
 
          // Debugging messages
-         cout << "!!Overflow occurred!! Saturating output to max value! Check results!" << std::endl;
-         cout << "Index: " << i << "Value: " << inputData[i] << std::endl;
+         cout << "!!Overflow occurred!! Saturating output to max value! Check results!" << endl;
+         cout << "Index: " << i << "Value: " << inputData[i] << endl;
       }
       else
       {
@@ -924,11 +924,12 @@ vector<uint64_t> TowerSums::trimming(const vector<uint64_t>& inputData, int targ
 {
 
    assert(MSB >= targetNumberBits);  // Ensure MSB is greater than or equal to targetNumberBits
+   cout << "Assertion passed. MSB is sufficient for the target number of bits.\n";
 
    vector<uint64_t> output;
 
    // Constructing selection mask so to set all bits left of MSB to zero
-   unsigned long long maskInt = (1ULL << 34) - 1;
+   uint64_t maskInt = (uint64_t(1) << MSB) - 1;
    
    cout << "maskInt = " << maskInt << endl;
    
@@ -983,7 +984,9 @@ void TowerSums::writeToFile( const vector<uint64_t>& outputValues, int sector, i
 {
    
    // Define the directory path
-    filesystem::path dirPath = "./output/stage_1_tower_sums";
+//    filesystem::path dirPath = "./output/stage_1_tower_sums";
+    filesystem::path dirPath = "./output/v241217";
+
     dirPath /= CE_X;
 
    // Check if the directory exists
